@@ -1,0 +1,37 @@
+<IfModule mod_deflate.c>
+    
+    SetOutputFilter DEFLATE
+    <IfModule mod_setenvif.c>
+        BrowserMatch ^Mozilla/4 gzip-only-text/html
+        BrowserMatch ^Mozilla/4\.0[678] no-gzip
+        BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+        SetEnvIfNoCase Request_URI .(?:gif|jpe?g|png)$ no-gzip dont-vary
+    </IfModule>
+    
+    <IfModule mod_headers.c>
+        Header append Vary User-Agent env=!dont-vary
+        Header set Connection keep-alive
+    </IfModule>
+    
+    <filesMatch ".(ico|jpg|jpeg|png|gif|woff2|woff|svg|css|js)$">
+        Header set Cache-Control "max-age=21600, public"
+    </filesMatch>
+    
+    <IfModule mod_rewrite.c>
+        Options -Indexes
+        
+        RewriteEngine On
+
+        #HTTP Redirection
+        RewriteCond %{HTTP_HOST} !localhost
+        RewriteCond %{HTTPS} off
+        RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=302]
+
+        RedirectMatch 403 ^/files/?$
+        
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule . index.php [L]
+    </IfModule>
+    
+</IfModule>
