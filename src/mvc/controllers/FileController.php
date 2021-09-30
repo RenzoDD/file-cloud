@@ -36,7 +36,7 @@ class FileController
         $arg = explode("/", __ROUTE__);
         
         $file = new FileModel();
-        $file = $file->ReadToken($arg[2]);
+        $file = $file->ReadToken($arg[3]);
         
         $path = __FILES__ . "/" . $file->Token;
         
@@ -71,10 +71,10 @@ class FileController
         $arg = explode("/", __ROUTE__);
         
         $file = new FileModel();
-        $file = $file->ReadFileID($arg[3]);
+        $file = $file->ReadToken($arg[3]);
         
         $folder = new FolderModel();
-        $folder = $folder->ReadFolderID($_SESSION["FolderID"]);
+        $folder = $folder->ReadFolderID($file->FolderID);
         
         if (unlink(__FILES__ . "/" . $file->Token))
         {

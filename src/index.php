@@ -18,7 +18,6 @@ if (isset($_SESSION["UserID"]) === false && str_starts_with(__ROUTE__, "/login")
     return;
 }
 
-
 if (str_starts_with(__ROUTE__, "/folder") === true)
 {
     if (__ROUTE__ === "/folder/create")
@@ -39,19 +38,22 @@ if (str_starts_with(__ROUTE__, "/folder") === true)
 }
 else if (str_starts_with(__ROUTE__, "/file") === true)
 {
+    $files = new FileController();
+
     if (__ROUTE__ === "/file/upload")
     {
-        $files = new FileController();
         $files->UploadFile();
     }
     else if (str_starts_with(__ROUTE__, "/file/delete") === true)
     {
-        $files = new FileController();
         $files->DeleteFile();
+    }
+    else if (str_starts_with(__ROUTE__, "/file/download") === true)
+    {
+        $files->DownloadFile();
     }
     else
     {
-        $files = new FileController();
         $files->ShowFile();
     }
 }

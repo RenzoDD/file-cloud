@@ -89,7 +89,6 @@
                                             <button type='button' class='btn btn-sm'><i class='bi bi-share'></i></button>
                                             <button type='button' class='btn btn-sm'><i class='bi bi-type'></i></button>
                                             <button type='button' class='btn btn-sm'><i class='bi bi-arrows-move'></i></button>
-                                            <button type='button' class='btn btn-sm'><i class='bi bi-trash' onclick='DeleteFile($f->FileID)'></i></button>
                                         </td>
                                     </tr>
                                 ";
@@ -110,10 +109,6 @@
                     function DeleteFolder(id)
                     {
                         window.location = "/folder/delete/" + id;
-                    }
-                    function DeleteFile(id)
-                    {
-                        window.location = "/file/delete/" + id;
                     }
                 </script>
                 <div class="text-end">
