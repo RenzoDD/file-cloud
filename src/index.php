@@ -48,6 +48,10 @@ else if (str_starts_with(__ROUTE__, "/file") === true)
     {
         $files->RenameFile();
     }
+    else if (__ROUTE__ === "/file/visibility")
+    {
+        $files->ChangeVisibility();
+    }
     else if (str_starts_with(__ROUTE__, "/file/delete") === true)
     {
         $files->DeleteFile();

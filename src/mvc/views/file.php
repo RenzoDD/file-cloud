@@ -71,7 +71,7 @@
 				<div class="text-center">
 					<a class="btn btn-success btn-sm" href="/file/download/<?php echo $file->Token ?>"><i class="bi bi-download"></i> Download</a>
 					<button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#rename"><i class="bi bi-type"></i> Rename</button>
-					<button class="btn btn-primary btn-sm" type="button"><i class="bi bi-share-fill"></i> Share</button>
+					<button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#visibility"><i class="bi bi-share-fill"></i> Share</button>
 					<a class="btn btn-danger btn-sm" href="/file/delete/<?php echo $file->Token ?>"><i class="bi bi-trash"></i> Delete</a>
 				</div>
 			</div>
@@ -79,7 +79,9 @@
 	</main>
 
 	<?php require __VIEW__ . "/.parts/page/footer.php"; ?>
+
 	<?php require __VIEW__ . "/.parts/modal/renameFile.php"; ?>
+	<?php require __VIEW__ . "/.parts/modal/visibilityFile.php"; ?>
 
 	<script src="/assets/js/jquery.js"></script>
 	<script src="/assets/js/bootstrap.js"></script>

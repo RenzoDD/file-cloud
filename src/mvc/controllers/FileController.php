@@ -51,6 +51,17 @@ class FileController
         readfile($path);
         exit;
     }
+    public function ChangeVisibility()
+    {
+        $file = new FileModel();
+        $file = $file->ReadFileID($_SESSION["FileID"]);
+        if ($file->ModifyVisibility($_SESSION["FileID"], $_GET["visibility"]))
+        {
+            header("Location: /file/$file->Token/visibility/done");
+        }
+        else
+            header("Location: /file/$file->Token/visibility/fail");
+    }
     public function RenameFile()
     {
         $file = new FileModel();
