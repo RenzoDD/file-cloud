@@ -51,6 +51,17 @@ class FileController
         readfile($path);
         exit;
     }
+    public function RenameFile()
+    {
+        $file = new FileModel();
+        $file = $file->ReadFileID($_SESSION["FileID"]);
+        if ($file->ModifyName($_SESSION["FileID"], $_POST["name"]))
+        {
+            header("Location: /file/$file->Token/rename/done");
+        }
+        else
+            header("Location: /file/$file->Token/rename/fail");
+    }
     public function UploadFile()
     {
         $file = new FileModel();

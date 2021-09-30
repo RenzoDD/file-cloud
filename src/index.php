@@ -44,6 +44,10 @@ else if (str_starts_with(__ROUTE__, "/file") === true)
     {
         $files->UploadFile();
     }
+    else if (__ROUTE__ === "/file/rename")
+    {
+        $files->RenameFile();
+    }
     else if (str_starts_with(__ROUTE__, "/file/delete") === true)
     {
         $files->DeleteFile();
