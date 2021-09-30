@@ -85,7 +85,7 @@
                                         <td>$f->Name</td>
                                         <td>$f->UploadDate</td>
                                         <td>
-                                            <button type='button' class='btn btn-sm' onclick='DownloadFile(`$f->Token`)'><i class='bi bi-download'></i></button>
+                                            <button type='button' class='btn btn-sm' onclick='OpenFile(`$f->Token`)'><i class='bi bi-search'></i></button>
                                             <button type='button' class='btn btn-sm'><i class='bi bi-share'></i></button>
                                             <button type='button' class='btn btn-sm'><i class='bi bi-type'></i></button>
                                             <button type='button' class='btn btn-sm'><i class='bi bi-arrows-move'></i></button>
@@ -99,7 +99,7 @@
                     </tbody>
                 </table>
                 <script>
-                    function DownloadFile(token)
+                    function OpenFile(token)
                     {
                         window.location = "/file/" + token;
                     }

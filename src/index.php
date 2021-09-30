@@ -52,7 +52,7 @@ else if (str_starts_with(__ROUTE__, "/file") === true)
     else
     {
         $files = new FileController();
-        $files->DownloadFile();
+        $files->ShowFile();
     }
 }
 else if (str_starts_with(__ROUTE__, "/login") === true)

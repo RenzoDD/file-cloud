@@ -5,11 +5,32 @@
  * Folder controller
  */
 
+require_once __MODEL__ . "/UserModel.php";
 require_once __MODEL__ . "/FileModel.php";
 require_once __MODEL__ . "/FolderModel.php";
 
 class FileController
 {
+    public function ShowFile()
+    {
+        $arg = explode("/", __ROUTE__);
+        
+        $file = new FileModel();
+        $file = $file->ReadToken($arg[2]);
+        
+        $_SESSION["FileID"] = $file->FileID;
+
+        $folder = new FolderModel();
+        $folder = $folder->ReadFolderID($file->FolderID);
+        
+        $childs = $folder->ReadChilds($folder->FolderID);
+        $ancestors = $folder->ReadAncestors($folder->FolderID);
+        
+        $user = new UserModel();
+        $user = $user->ReadUserID($file->UserID);
+        
+        require __VIEW__ . "/file.php";
+    }
     public function DownloadFile()
     {
         $arg = explode("/", __ROUTE__);

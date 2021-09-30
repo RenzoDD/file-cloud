@@ -64,6 +64,30 @@ class UserModel extends DataBase
 		{ return false; }
 	}
 
+	public function ReadUserID($UserID)
+	{
+		try
+		{
+			$query = $this->db->prepare("CALL Users_Read_UserID(:UserID)");
+			$query->bindParam(":UserID", $UserID, PDO::PARAM_STR);
+			
+			if (!$query->execute())
+				return null;
+				
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+			
+			if (sizeof($result) == 0)
+				return null;
+			
+			$obj = new UserModel();
+			$obj->FillData($obj, $result[0]);
+			
+			return $obj;
+		}
+		catch (Exception $e)
+		{ return null; }
+	}
+
 	public function ReadUsernamePassword($Username,$Password)
 	{
 		try

@@ -36,6 +36,14 @@ BEGIN
 			AND U.MaxSize = MaxSize;
 END //
 
+DROP PROCEDURE IF EXISTS Users_Read_UserID //
+CREATE PROCEDURE Users_Read_UserID ( IN UserID TEXT )
+BEGIN
+	SELECT 	U.*
+	FROM 	Users AS U
+	WHERE 	U.UserID = UserID;
+END //
+
 DROP PROCEDURE IF EXISTS Users_Read_UsernamePassword //
 CREATE PROCEDURE Users_Read_UsernamePassword ( IN Username TEXT, IN Password TEXT )
 BEGIN

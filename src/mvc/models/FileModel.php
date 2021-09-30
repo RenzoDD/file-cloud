@@ -12,7 +12,7 @@ class FileModel extends DataBase
     public $FileID;
     
     public $UserID;
-    public $DirectoryID;
+    public $FolderID;
 
     public $Name;
     public $Token;
@@ -27,8 +27,8 @@ class FileModel extends DataBase
 		if (isset($origen['UserID']))
 			$destino->UserID = $origen['UserID'];
 			
-		if (isset($origen['DirectoryID']))  
-			$destino->DirectoryID = $origen['DirectoryID'];
+		if (isset($origen['FolderID']))  
+			$destino->FolderID = $origen['FolderID'];
 		
 		if (isset($origen['Name']))  
 			$destino->Name = $origen['Name'];
@@ -43,13 +43,13 @@ class FileModel extends DataBase
 			$destino->Visibility = $origen['Visibility'];
 	}
 
-	public function Create($UserID,$DirectoryID,$Name,$Visibility)
+	public function Create($UserID,$FolderID,$Name,$Visibility)
 	{
 		try
 		{
-			$query = $this->db->prepare("CALL Files_Create(:UserID,:DirectoryID,:Name,:Visibility)");
+			$query = $this->db->prepare("CALL Files_Create(:UserID,:FolderID,:Name,:Visibility)");
 			$query->bindParam(":UserID"     , $UserID     , PDO::PARAM_INT);
-			$query->bindParam(":DirectoryID", $DirectoryID, PDO::PARAM_INT);
+			$query->bindParam(":FolderID", $FolderID, PDO::PARAM_INT);
 			$query->bindParam(":Name"       , $Name       , PDO::PARAM_STR);
 			$query->bindParam(":Visibility" , $Visibility , PDO::PARAM_STR);
 			
@@ -143,11 +143,11 @@ class FileModel extends DataBase
 		{ return null; }
 	}
 
-    public function ModifyDirectory($FileID,$ParentID)
+    public function ModifyFolder($FileID,$ParentID)
     {
 		try
 		{
-			$query = $this->db->prepare("CALL Files_Modify_Directory(:FileID,:ParentID)");
+			$query = $this->db->prepare("CALL Files_Modify_Folder(:FileID,:ParentID)");
 			$query->bindParam(":FileID"  , $FileID  , PDO::PARAM_INT);
 			$query->bindParam(":ParentID", $ParentID, PDO::PARAM_STR);
 	
