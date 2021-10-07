@@ -20,7 +20,7 @@ class FileController
 
         if ($file !== null)
         {
-            if ($file->Visibility === "ALL" || $file->UserID == $_SESSION["UserID"])
+            if ($file->Visibility === "ALL" || (isset($_SESSION["UserID"]) && $file->UserID == $_SESSION["UserID"]))
             {
                 $_SESSION["FileID"] = $file->FileID;
 
