@@ -85,18 +85,37 @@ class FileController
     }
     public function UploadFile()
     {
-        $file = new FileModel();
         
         $folder = new FolderModel();
         $folder = $folder->ReadFolderID($_SESSION["FolderID"]);
         
-        if ($file->Create($_SESSION["UserID"],$_SESSION["FolderID"],$_FILES['FilePath']['name'],"ME"))
+        if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID)
         {
-            copy($_FILES['FilePath']['tmp_name'], __FILES__ . "/" . $file->Token);
-            header("Location: /folder/$folder->Token/file/done");
+            $user = new UserModel();
+            $user = $user->ReadUserID($_SESSION["UserID"]);
+
+            $totalSpace = $user->MaxSize;
+
+            
+            $file = new FileModel();
+            $totalUsed = $file->ReadSpaceUsed($_SESSION["UserID"]);
+            
+
+            if ($_FILES['FilePath']['size'] + $totalUsed <= $totalSpace)
+            {
+                if ($file->Create($_SESSION["UserID"],$_SESSION["FolderID"],$_FILES['FilePath']['name'],$_FILES['FilePath']['size'],"ME"))
+                {
+                    copy($_FILES['FilePath']['tmp_name'], __FILES__ . "/" . $file->Token);
+                    header("Location: /folder/$folder->Token/file/done");
+                }
+                else
+                    header("Location: /folder/$folder->Token/file/fail");
+            }
+            else
+                header("Location: /folder/$folder->Token/file/exceeded");
         }
         else
-            header("Location: /folder/$folder->Token/file/fail");
+            header("Location: /login");
     }
     public function DeleteFile()
     {

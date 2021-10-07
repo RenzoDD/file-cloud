@@ -5,6 +5,7 @@
  * Folder controller
  */
 
+require_once __MODEL__ . "/UserModel.php";
 require_once __MODEL__ . "/FileModel.php";
 require_once __MODEL__ . "/FolderModel.php";
 
@@ -26,6 +27,17 @@ class FolderController
 
                 $file = new FileModel();
                 $files = $file->ReadFolder($folder->FolderID);
+
+                if (isset($_SESSION["UserID"]) && $folder->UserID == $_SESSION["UserID"])
+                {
+                    $user = new UserModel();
+                    $user = $user->ReadUserID($_SESSION["UserID"]);
+
+                    $totalSpace = $user->MaxSize;
+                    $totalUsed = $file->ReadSpaceUsed($_SESSION["UserID"]);
+
+                    $spaceUsed = intval( $totalUsed  / $totalSpace * 100);
+                }
 
                 $_SESSION["FolderID"] = $folder->FolderID;
 

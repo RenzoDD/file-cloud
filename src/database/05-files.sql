@@ -14,6 +14,7 @@ CREATE TABLE Files (
 	FolderID INTEGER     NOT NULL,
 	
 	Name        TEXT        NOT NULL,
+	Size		INTEGER		NOT NULL,
 	Token       VARCHAR(64) NOT NULL    UNIQUE,
 	UploadDate  DATETIME    NOT NULL,
 	Visibility  TEXT        NOT NULL, -- ALL, ME
@@ -24,12 +25,12 @@ CREATE TABLE Files (
 ) //
 
 DROP PROCEDURE IF EXISTS Files_Create //
-CREATE PROCEDURE Files_Create (IN UserID INTEGER, IN FolderID INTEGER, IN Name TEXT, IN Visibility TEXT)
+CREATE PROCEDURE Files_Create (IN UserID INTEGER, IN FolderID INTEGER, IN Name TEXT, IN Size INTEGER, IN Visibility TEXT)
 BEGIN
     SET @token = Nonce();
     SET @upload_date = LocalDateTime();
-	INSERT INTO Files (UserID, FolderID, Name , Token, UploadDate, Visibility)
-	VALUES 	(UserID, FolderID, Name, @token, @upload_date, Visibility);
+	INSERT INTO Files (UserID, FolderID, Name, Size, Token, UploadDate, Visibility)
+	VALUES 	(UserID, FolderID, Name, Size, @token, @upload_date, Visibility);
 
 	SELECT 	F.*
 	FROM 	Files AS F
@@ -39,6 +40,14 @@ BEGIN
 			AND F.Token = @token
 			AND F.UploadDate = @upload_date
 			AND F.Visibility = Visibility;
+END //
+
+DROP PROCEDURE IF EXISTS Files_Read_SpaceUsed //
+CREATE PROCEDURE Files_Read_SpaceUsed ( IN UserID TEXT )
+BEGIN
+	SELECT 	SUM(F.Size) AS SpaceUsed
+	FROM 	Files AS F
+	WHERE 	F.UserID = UserID;
 END //
 
 DROP PROCEDURE IF EXISTS Files_Read_Folder //

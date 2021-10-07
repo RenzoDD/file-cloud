@@ -37,6 +37,11 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-9">
+                <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: <?php echo $spaceUsed ?>%;"><?php echo $spaceUsed ?>%</div>
+                    </div>
+                <?php endif ?>
                 <table class="table table-hover">
                     <thead>
                         <tr>
