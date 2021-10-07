@@ -55,9 +55,23 @@ class FolderController
         else
             header("Location: /login");
     }
+    public function ChangeVisibility($FolderID, $Visibility)
+    {
+        $modify = new FolderModel();
+        $folder = $modify->ReadFolderID($_SESSION["FolderID"]);
+
+        if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] == $folder->UserID)
+        {
+            if ($modify->ModifyVisibility($FolderID, $Visibility))
+                header("Location: /folder/$folder->Token/visibility/done");
+            else
+                header("Location: /folder/$folder->Token/visibility/fail");
+        }
+        else
+            header("Location: /login");
+    }
     public function RenameFolder($FolderID, $Name)
     {
-
         $modify = new FolderModel();
         $folder = $modify->ReadFolderID($_SESSION["FolderID"]);
 

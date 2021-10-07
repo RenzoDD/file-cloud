@@ -41,6 +41,7 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
+                            <th scope="col"><i class="bi bi-shield-lock"></i></th>
                             <th scope="col">Name</th>
                             <th scope="col">Date</th>
                             <th scope="col">Options</th>
@@ -51,12 +52,13 @@
                             <?php if ($f->Visibility === "ALL" || (isset($_SESSION["UserID"]) && $f->UserID == $_SESSION["UserID"])) : ?>
                                 <tr>
                                     <td><i class="bi bi-folder-fill"></i></td>
+                                    <td><i class="bi bi-<?php echo $f->Visibility === "ALL" ? "unlock" : "lock-fill" ?>"></i></td>
                                     <td><?php echo $f->Name ?></td>
                                     <td><?php echo $f->CreateDate ?></td>
                                     <td>
                                         <a type="button" class="btn btn-sm" href="/folder/<?php echo $f->Token ?>"><i class="bi bi-search"></i></a>
                                         <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
-                                            <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#folderVisibility"><i class="bi bi-share"></i></button>
+                                            <button type="button" class="btn btn-sm" data-bs-toggle="modal" onclick="VisibilityFolder(<?php echo $f->FolderID ?>, '<?php echo $f->Visibility ?>')" data-bs-target="#folderVisibility"><i class="bi bi-share"></i></button>
                                             <button type="button" class="btn btn-sm" data-bs-toggle="modal" onclick="RenameFolder(<?php echo $f->FolderID ?>, '<?php echo $f->Name ?>')" data-bs-target="#folderRename"><i class="bi bi-type"></i></button>
                                             <a type="button" class="btn btn-sm" href="/folder/delete/<?php echo $f->FolderID ?>"><i class="bi bi-trash"></i></a>
                                         <?php endif ?>
@@ -69,6 +71,7 @@
                             <?php if ($f->Visibility === "ALL" || (isset($_SESSION["UserID"]) && $f->UserID == $_SESSION["UserID"])) : ?>
                                 <tr>
                                     <td><i class="bi bi-file-earmark-text-fill"></i></td>
+                                    <td><i class="bi bi-<?php echo $f->Visibility === "ALL" ? "unlock" : "lock-fill" ?>"></i></td>
                                     <td><?php echo $f->Name ?></td>
                                     <td><?php echo $f->UploadDate ?></td>
                                     <td>
