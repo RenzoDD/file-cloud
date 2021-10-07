@@ -3,7 +3,7 @@
 
 <head>
 	<?php
-	echo MetaHeaders("File storage", "Easy, fast and save");
+	echo MetaHeaders($file->Name, "");
 	?>
 
 	<link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -11,15 +11,16 @@
 	<link href="/assets/css/style.css" rel="stylesheet">
 
 	<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico" />
-	<title>File Storage</title>
+	<title><?php echo $file->Name ?></title>
 </head>
 
 <body class="d-flex flex-column h-100">
 	<?php require __VIEW__ . "/.parts/page/header.php"; ?>
 
-	<main class="container my-3">
+	<main class="container my-5">
 		<div class="row">
 			<div class="col-12">
+				<h1 class="text-center mb-3"> <i class="bi bi-file-earmark-text-fill"></i></h1>
 				<h1 class="text-center mb-3"> <?php echo $file->Name; ?></h1>
 				<?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $file->UserID) : ?>
 					<nav aria-label="breadcrumb">
