@@ -64,6 +64,7 @@ function NavbarItem($enabled, $text, $href = "#", $active = false, $modal= false
                     }
                     else
                     {
+                        NavbarItem(true , Icon("pen-fill") . " Sign up" , "/signup", false);
                         NavbarItem(true , Icon("door-closed-fill") . " Log in" , "/login", false);
                     }
                 ?>

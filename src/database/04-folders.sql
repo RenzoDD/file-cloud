@@ -35,7 +35,6 @@ BEGIN
 	SELECT 	D.*
 	FROM 	Folders AS D
 	WHERE 	D.UserID = UserID
-	        AND D.ParentID = ParentID
 			AND D.Name = Name
 			AND D.Token = @token
 			AND D.CreateDate = @create_date

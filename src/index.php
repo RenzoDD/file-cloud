@@ -95,6 +95,21 @@ else if (str_starts_with(__ROUTE__, "/login") === true)
         return;
     }
 }
+else if (str_starts_with(__ROUTE__, "/signup") === true)
+{
+    if (__ROUTE__ === "/signup/register")
+    {
+        $users = new UserController();
+        $users->Register($_POST["email"],$_POST["username"], $_POST["password"]);
+        return;
+    }
+    else
+    {
+        $users = new UserController();
+        $users->SignUp();
+        return;
+    }
+}
 else
 {
     header("Location: /login");
