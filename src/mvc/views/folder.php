@@ -38,8 +38,15 @@
         <div class="row justify-content-center">
             <div class="col-9">
                 <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: <?php echo $spaceUsed ?>%;"><?php echo $spaceUsed ?>%</div>
+
+                    <div class="mb-3">
+                        Space quota:
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: <?php echo $spaceUsed ?>%;"><?php echo $spaceUsed ?>%</div>
+                        </div>
+                        <div class="text-center">
+                            <?php echo round($totalUsed / 1024, 2) ?> / <?php echo round($totalSpace / 1024, 2) ?> MB
+                        </div>
                     </div>
                 <?php endif ?>
                 <table class="table table-hover">
@@ -48,6 +55,7 @@
                             <th scope="col"></th>
                             <th scope="col"><i class="bi bi-shield-lock"></i></th>
                             <th scope="col">Name</th>
+                            <th scope="col">Size</th>
                             <th scope="col">Date</th>
                             <th scope="col">Options</th>
                         </tr>
@@ -59,6 +67,7 @@
                                     <td><i class="bi bi-folder-fill"></i></td>
                                     <td><i class="bi bi-<?php echo $f->Visibility === "ALL" ? "unlock" : "lock-fill" ?>"></i></td>
                                     <td><?php echo $f->Name ?></td>
+                                    <td>N/A</td>
                                     <td><?php echo $f->CreateDate ?></td>
                                     <td>
                                         <a type="button" class="btn btn-sm" href="/folder/<?php echo $f->Token ?>"><i class="bi bi-search"></i></a>
@@ -78,6 +87,7 @@
                                     <td><i class="bi bi-file-earmark-text-fill"></i></td>
                                     <td><i class="bi bi-<?php echo $f->Visibility === "ALL" ? "unlock" : "lock-fill" ?>"></i></td>
                                     <td><?php echo $f->Name ?></td>
+                                    <td><?php echo round($f->Size / 1024, 2) ?> MB</td>
                                     <td><?php echo $f->UploadDate ?></td>
                                     <td>
                                         <a type="button" class="btn btn-sm" href="/file/<?php echo $f->Token ?>"><i class="bi bi-search"></i></a>

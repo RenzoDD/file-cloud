@@ -49,6 +49,10 @@
 							<td><?php echo $file->Name; ?></td>
 						</tr>
 						<tr>
+							<th scope="row">Size: </th>
+							<td><?php echo round($file->Size / 1024, 2); ?> MB</td>
+						</tr>
+						<tr>
 							<th scope="row">Owner: </th>
 							<td><?php echo $user->Username; ?></td>
 						</tr>
@@ -56,10 +60,12 @@
 							<th scope="row">Upload Time: </th>
 							<td><?php echo $file->UploadDate; ?></td>
 						</tr>
-						<tr>
-							<th scope="row">Visibility: </th>
-							<td><?php echo ($file->Visibility === "ALL") ? "Everyone" : "Just me"; ?></td>
-						</tr>
+						<?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $file->UserID) : ?>
+							<tr>
+								<th scope="row">Visibility: </th>
+								<td><?php echo ($file->Visibility === "ALL") ? "Everyone" : "Just me"; ?></td>
+							</tr>
+						<?php endif ?>
 					</tbody>
 				</table>
 				<div class="text-center">

@@ -18,7 +18,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Local file path:</label>
-                    <input class="form-control" type="file" name="FilePath">
+                    <input class="form-control" type="file" name="FilePath" required>
                 </div>    
             </div>
             <div class="modal-footer">
