@@ -21,10 +21,10 @@
 		<div class="row">
 			<div class="col-12">
 				<h1 class="text-center mb-3"><i class="bi bi-x-octagon-fill"></i></h1>
-                <?php if ($file === null): ?>
-				    <h1 class="text-center mb-3">This file doesn't exist</h1>
+                <?php if ($folder === null): ?>
+				    <h1 class="text-center mb-3">This folder doesn't exist</h1>
                 <?php else : ?>
-                    <h1 class="text-center mb-3">You don't have access to this file</h1>
+                    <h1 class="text-center mb-3">You don't have access to this folder</h1>
                 <?php endif ?>
 			</div>
 		</div>
