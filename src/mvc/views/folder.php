@@ -56,8 +56,8 @@
                                     <td>
                                         <a type="button" class="btn btn-sm" href="/folder/<?php echo $f->Token ?>"><i class="bi bi-search"></i></a>
                                         <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
-                                            <button type="button" class="btn btn-sm"><i class="bi bi-share"></i></button>
-                                            <button type="button" class="btn btn-sm"><i class="bi bi-type"></i></button>
+                                            <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#folderVisibility"><i class="bi bi-share"></i></button>
+                                            <button type="button" class="btn btn-sm" data-bs-toggle="modal" onclick="RenameFolder(<?php echo $f->FolderID ?>, '<?php echo $f->Name ?>')" data-bs-target="#folderRename"><i class="bi bi-type"></i></button>
                                             <a type="button" class="btn btn-sm" href="/folder/delete/<?php echo $f->FolderID ?>"><i class="bi bi-trash"></i></a>
                                         <?php endif ?>
                                     </td>
@@ -98,6 +98,9 @@
     <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
         <?php require __VIEW__ . "/.parts/modal/addFolder.php"; ?>
         <?php require __VIEW__ . "/.parts/modal/addFile.php"; ?>
+
+        <?php require __VIEW__ . "/.parts/modal/folderVisibility.php"; ?>
+        <?php require __VIEW__ . "/.parts/modal/folderRename.php"; ?>
     <?php endif ?>
 
     <script src="/assets/js/jquery.js"></script>

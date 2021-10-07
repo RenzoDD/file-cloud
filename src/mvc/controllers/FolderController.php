@@ -40,11 +40,36 @@ class FolderController
     public function CreateFolder()
     {
         $folder = new FolderModel();
-        $folder->Create($_SESSION["UserID"], $_SESSION["FolderID"], $_POST["FolderName"], "ME");
-
         $folder = $folder->ReadFolderID($_SESSION["FolderID"]);
 
-        header("Location: /folder/$folder->Token");
+        
+        if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] == $folder->UserID)
+        {
+            $folder->Create($_SESSION["UserID"], $_SESSION["FolderID"], $_POST["FolderName"], "ME");
+
+            $folder = $folder->ReadFolderID($_SESSION["FolderID"]);
+
+            header("Location: /folder/$folder->Token");
+            
+        }
+        else
+            header("Location: /login");
+    }
+    public function RenameFolder($FolderID, $Name)
+    {
+
+        $modify = new FolderModel();
+        $folder = $modify->ReadFolderID($_SESSION["FolderID"]);
+
+        if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] == $folder->UserID)
+        {
+            if ($modify->ModifyName($FolderID, $Name))
+                header("Location: /folder/$folder->Token/rename/done");
+            else
+                header("Location: /folder/$folder->Token/rename/fail");
+        }
+        else
+            header("Location: /login");
     }
     public function DeleteFolder()
     {
@@ -53,9 +78,15 @@ class FolderController
         $folder = new FolderModel();
         $folder = $folder->ReadFolderID($_SESSION["FolderID"]);
 
-        if ($folder->DeleteID($arg[3]))
-            header("Location: /folder/$folder->Token/delete/done");
+        
+        if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] == $folder->UserID)
+        {
+            if ($folder->DeleteID($arg[3]))
+                header("Location: /folder/$folder->Token/delete/done");
+            else
+                header("Location: /folder/$folder->Token/delete/fail");
+        }
         else
-            header("Location: /folder/$folder->Token/delete/fail");
+            header("Location: /login");
     }
 }
