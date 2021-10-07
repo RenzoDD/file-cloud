@@ -17,19 +17,29 @@ class FileController
         
         $file = new FileModel();
         $file = $file->ReadToken($arg[2]);
-        
-        $_SESSION["FileID"] = $file->FileID;
 
-        $folder = new FolderModel();
-        $folder = $folder->ReadFolderID($file->FolderID);
+        if ($file !== null)
+        {
+            if ($file->Visibility === "ALL" || $file->UserID == $_SESSION["UserID"])
+            {
+                $_SESSION["FileID"] = $file->FileID;
+
+                $folder = new FolderModel();
+                $folder = $folder->ReadFolderID($file->FolderID);
+                
+                $childs = $folder->ReadChilds($folder->FolderID);
+                $ancestors = $folder->ReadAncestors($folder->FolderID);
+                
+                $user = new UserModel();
+                $user = $user->ReadUserID($file->UserID);
+                
+                require __VIEW__ . "/file.php";
+                return;
+            }
+        }
         
-        $childs = $folder->ReadChilds($folder->FolderID);
-        $ancestors = $folder->ReadAncestors($folder->FolderID);
-        
-        $user = new UserModel();
-        $user = $user->ReadUserID($file->UserID);
-        
-        require __VIEW__ . "/file.php";
+        require __VIEW__ . "/deny-file.php";
+        return;
     }
     public function DownloadFile()
     {

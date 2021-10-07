@@ -20,25 +20,18 @@
 	<main class="container my-3">
 		<div class="row">
 			<div class="col-12">
-				<h1 class="text-center"> <?php echo $file->Name; ?></h1>
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<?php
-						foreach ($ancestors as $f) {
-							if ($f->ParentID === null)
-								$icon = '<i class="bi bi-house-door-fill"></i>';
-							else
-								$icon = '<i class="bi bi-archive"></i>';
-
-							echo "
-                                    <li class='breadcrumb-item'><a href='/folder/$f->Token'>$icon $f->Name</a></li>
-                                ";
-						}
-						?>
-						<li class='breadcrumb-item'><a href='/folder/<?php echo $folder->Token; ?>'><i class="bi bi-archive-fill"></i> <?php echo $folder->Name; ?></a></li>
-						<li class="breadcrumb-item active"><i class="bi bi-file-earmark-text-fill"></i> <?php echo $file->Name; ?></li>
-					</ol>
-				</nav>
+				<h1 class="text-center mb-3"> <?php echo $file->Name; ?></h1>
+				<?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $file->UserID) : ?>
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<?php foreach ($ancestors as $f) : ?>
+								<li class="breadcrumb-item"><a href="/folder/<?php echo $f->Token ?>"><i class="bi bi-<?php echo $f->ParentID === null ? "house-door-fill" : "archive" ?>"></i> <?php echo $f->Name ?></a></li>
+							<?php endforeach ?>
+							<li class='breadcrumb-item'><a href='/folder/<?php echo $folder->Token; ?>'><i class="bi bi-<?php echo $folder->ParentID === null ? "house-door-fill" : "archive-fill" ?>"></i> <?php echo $folder->Name; ?></a></li>
+							<li class="breadcrumb-item active"><i class="bi bi-file-earmark-text-fill"></i> <?php echo $file->Name; ?></li>
+						</ol>
+					</nav>
+				<?php endif ?>
 			</div>
 		</div>
 		<div class="row justify-content-center">
@@ -70,9 +63,12 @@
 				</table>
 				<div class="text-center">
 					<a class="btn btn-success btn-sm" href="/file/download/<?php echo $file->Token ?>"><i class="bi bi-download"></i> Download</a>
-					<button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#rename"><i class="bi bi-type"></i> Rename</button>
-					<button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#visibility"><i class="bi bi-share-fill"></i> Share</button>
-					<a class="btn btn-danger btn-sm" href="/file/delete/<?php echo $file->Token ?>"><i class="bi bi-trash"></i> Delete</a>
+
+					<?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $file->UserID) : ?>
+						<button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#rename"><i class="bi bi-type"></i> Rename</button>
+						<button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#visibility"><i class="bi bi-share-fill"></i> Share</button>
+						<a class="btn btn-danger btn-sm" href="/file/delete/<?php echo $file->Token ?>"><i class="bi bi-trash"></i> Delete</a>
+					<?php endif ?>
 				</div>
 			</div>
 		</div>
@@ -80,8 +76,10 @@
 
 	<?php require __VIEW__ . "/.parts/page/footer.php"; ?>
 
-	<?php require __VIEW__ . "/.parts/modal/renameFile.php"; ?>
-	<?php require __VIEW__ . "/.parts/modal/visibilityFile.php"; ?>
+	<?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $file->UserID) : ?>
+		<?php require __VIEW__ . "/.parts/modal/renameFile.php"; ?>
+		<?php require __VIEW__ . "/.parts/modal/visibilityFile.php"; ?>
+	<?php endif ?>
 
 	<script src="/assets/js/jquery.js"></script>
 	<script src="/assets/js/bootstrap.js"></script>
