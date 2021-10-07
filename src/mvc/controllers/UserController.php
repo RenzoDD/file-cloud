@@ -14,10 +14,10 @@ class UserController
     {
         require __VIEW__ . "/login.php";
     }
-    public function CheckLogIn()
+    public function CheckLogIn($username, $password)
     {
         $user = new UserModel();
-        $user = $user->ReadUsernamePassword($_POST["username"], $_POST["password"]);
+        $user = $user->ReadUsernamePassword($username, $password);
         if ($user !== null)
         {
             $folder = new FolderModel();

@@ -28,5 +28,5 @@ define("__CONTROLLER__", __DIR__ . "/mvc/controllers");
 
 define("__FILES__", __DIR__ . "/files");
 
-define("__ROUTE__", $_SERVER['REQUEST_URI']);
+define("__ROUTE__", explode("?", $_SERVER['REQUEST_URI'])[0]);
 ?>

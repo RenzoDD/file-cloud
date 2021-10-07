@@ -17,19 +17,29 @@ class FileController
         
         $file = new FileModel();
         $file = $file->ReadToken($arg[2]);
-        
-        $_SESSION["FileID"] = $file->FileID;
 
-        $folder = new FolderModel();
-        $folder = $folder->ReadFolderID($file->FolderID);
+        if ($file !== null)
+        {
+            if ($file->Visibility === "ALL" || (isset($_SESSION["UserID"]) && $file->UserID == $_SESSION["UserID"]))
+            {
+                $_SESSION["FileID"] = $file->FileID;
+
+                $folder = new FolderModel();
+                $folder = $folder->ReadFolderID($file->FolderID);
+                
+                $childs = $folder->ReadChilds($folder->FolderID);
+                $ancestors = $folder->ReadAncestors($folder->FolderID);
+                
+                $user = new UserModel();
+                $user = $user->ReadUserID($file->UserID);
+                
+                require __VIEW__ . "/file.php";
+                return;
+            }
+        }
         
-        $childs = $folder->ReadChilds($folder->FolderID);
-        $ancestors = $folder->ReadAncestors($folder->FolderID);
-        
-        $user = new UserModel();
-        $user = $user->ReadUserID($file->UserID);
-        
-        require __VIEW__ . "/file.php";
+        require __VIEW__ . "/deny-file.php";
+        return;
     }
     public function DownloadFile()
     {
@@ -50,6 +60,28 @@ class FileController
         ob_clean();
         readfile($path);
         exit;
+    }
+    public function ChangeVisibility()
+    {
+        $file = new FileModel();
+        $file = $file->ReadFileID($_SESSION["FileID"]);
+        if ($file->ModifyVisibility($_SESSION["FileID"], $_GET["visibility"]))
+        {
+            header("Location: /file/$file->Token/visibility/done");
+        }
+        else
+            header("Location: /file/$file->Token/visibility/fail");
+    }
+    public function RenameFile()
+    {
+        $file = new FileModel();
+        $file = $file->ReadFileID($_SESSION["FileID"]);
+        if ($file->ModifyName($_SESSION["FileID"], $_POST["name"]))
+        {
+            header("Location: /file/$file->Token/rename/done");
+        }
+        else
+            header("Location: /file/$file->Token/rename/fail");
     }
     public function UploadFile()
     {

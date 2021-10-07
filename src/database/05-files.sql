@@ -71,6 +71,11 @@ BEGIN
 	UPDATE  Files AS F
 	SET     F.FolderID = FolderID
 	WHERE 	F.FileID = FileID;
+	
+	SELECT 	F.*
+	FROM 	Files AS F
+	WHERE 	F.FileID = FileID
+			AND F.FolderID = FolderID;
 END //
 
 DROP PROCEDURE IF EXISTS Files_Modify_Name //
@@ -79,6 +84,11 @@ BEGIN
 	UPDATE  Files AS F
 	SET     F.Name = Name
 	WHERE 	F.FileID = FileID;
+	
+	SELECT 	F.*
+	FROM 	Files AS F
+	WHERE 	F.FileID = FileID
+			AND F.Name = Name;
 END //
 
 DROP PROCEDURE IF EXISTS Files_Modify_Visibility //
@@ -87,6 +97,11 @@ BEGIN
 	UPDATE  Files AS F
 	SET     F.Visibility = Visibility
 	WHERE 	F.FileID = FileID;
+	
+	SELECT 	F.*
+	FROM 	Files AS F
+	WHERE 	F.FileID = FileID
+			AND F.Visibility = Visibility;
 END //
 
 DROP PROCEDURE IF EXISTS Files_Delete //

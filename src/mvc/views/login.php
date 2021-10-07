@@ -35,7 +35,7 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="mb-3 text-center">
-                        <input type="submit" class="btn btn-primary" value="Log In">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-door-open-fill"></i> Log In</button>
                     </div>
                 </form>
 	        </div>
