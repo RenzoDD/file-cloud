@@ -58,8 +58,14 @@ function NavbarItem($enabled, $text, $href = "#", $active = false, $modal= false
         <div class="collapse navbar-collapse text-center" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <?php
-                    NavbarItem(true , Icon("house-door-fill")  . " Home"    , "/"       , str_starts_with( $codigo_pagina, "/home") );
-                    NavbarItem(true , Icon("door-closed-fill") . " Log out" , "/log-out", false);
+                    if (isset($_SESSION["UserID"]))
+                    {
+                        NavbarItem(true , Icon("door-open-fill") . " Log out" , "/login", false);
+                    }
+                    else
+                    {
+                        NavbarItem(true , Icon("door-closed-fill") . " Log in" , "/login", false);
+                    }
                 ?>
             </ul>
         </div>

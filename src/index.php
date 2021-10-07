@@ -20,6 +20,18 @@ if (str_starts_with(__ROUTE__, "/folder") === true)
         $directories->CreateFolder();
         return;
     }
+    else if (__ROUTE__ === "/folder/rename")
+    {
+        $directories = new FolderController();
+        $directories->RenameFolder($_POST["id"],$_POST["name"]);
+        return;
+    }
+    else if (__ROUTE__ === "/folder/visibility")
+    {
+        $directories = new FolderController();
+        $directories->ChangeVisibility($_POST["id"],$_POST["visibility"]);
+        return;
+    }
     else if (str_starts_with(__ROUTE__, "/folder/delete") === true)
     {
         $directories = new FolderController();

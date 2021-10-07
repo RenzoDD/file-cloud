@@ -12,6 +12,7 @@ class UserController
 {
     public function LogIn()
     {
+        unset($_SESSION["UserID"]);
         require __VIEW__ . "/login.php";
     }
     public function CheckLogIn($username, $password)
