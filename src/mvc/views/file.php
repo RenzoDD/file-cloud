@@ -50,7 +50,7 @@
 						</tr>
 						<tr>
 							<th scope="row">Size: </th>
-							<td><?php echo round($file->Size / 1024, 2); ?> MB</td>
+							<td><?php echo round($file->Size / __SIZE__, 2). " ". __UNIT__; ?></td>
 						</tr>
 						<tr>
 							<th scope="row">Owner: </th>

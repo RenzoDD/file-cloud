@@ -37,18 +37,6 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-9">
-                <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
-
-                    <div class="mb-3">
-                        Space quota:
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: <?php echo $spaceUsed ?>%;"><?php echo $spaceUsed ?>%</div>
-                        </div>
-                        <div class="text-center">
-                            <?php echo round($totalUsed / 1024, 2) ?> / <?php echo round($totalSpace / 1024, 2) ?> MB
-                        </div>
-                    </div>
-                <?php endif ?>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -87,7 +75,7 @@
                                     <td><i class="bi bi-file-earmark-text-fill"></i></td>
                                     <td><i class="bi bi-<?php echo $f->Visibility === "ALL" ? "unlock" : "lock-fill" ?>"></i></td>
                                     <td><?php echo $f->Name ?></td>
-                                    <td><?php echo round($f->Size / 1024, 2) ?> MB</td>
+                                    <td><?php echo round($f->Size / __SIZE__, 2). " ". __UNIT__; ?></td>
                                     <td><?php echo $f->UploadDate ?></td>
                                     <td>
                                         <a type="button" class="btn btn-sm" href="/file/<?php echo $f->Token ?>"><i class="bi bi-search"></i></a>
@@ -105,6 +93,24 @@
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addFile">
                             <i class="bi bi-upload"></i> Upload file
                         </button>
+                        <?php if (sizeof($ancestors) !== 0): ?>
+                            <a class="btn btn-secondary" href="/folder/<?php echo $ancestors[sizeof($ancestors) - 1]->Token ?>">
+                                <i class="bi bi-arrow-return-left"></i> Go back
+                            </a>
+                        <?php endif ?>
+                    </div>
+                <?php endif ?>
+
+                <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
+                    <hr>
+                    <div class="mb-3">
+                        Space quota:
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $spaceUsed ?>%;"><?php echo $spaceUsed ?>%</div>
+                        </div>
+                        <div class="text-center">
+                            <?php echo round($totalUsed / __SIZE__, 2) ?> / <?php echo round($totalSpace / __SIZE__, 2). " ". __UNIT__; ?>
+                        </div>
                     </div>
                 <?php endif ?>
             </div>

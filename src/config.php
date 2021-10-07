@@ -29,4 +29,13 @@ define("__CONTROLLER__", __DIR__ . "/mvc/controllers");
 define("__FILES__", __DIR__ . "/files");
 
 define("__ROUTE__", explode("?", $_SERVER['REQUEST_URI'])[0]);
+
+define("__SPACE__", 1 * 1024 * 1024); // Space for new users in bytes, HERE 1 MiB
+
+define("__SIZE__", 1024 * 1024); // Unit division  (bytes  /  __SIZE__)
+define("__UNIT__", "MiB"); // Unit name
+
+
+if (!is_dir(__FILES__))
+    mkdir(__FILES__);
 ?>

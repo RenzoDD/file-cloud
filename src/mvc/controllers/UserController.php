@@ -41,7 +41,7 @@ class UserController
     public function Register($email, $username, $password)
     {
         $user = new UserModel();
-        if ($user->Create($email, $username, $password, 1024))
+        if ($user->Create($email, $username, $password, __SPACE__))
         {
             $folder = new FolderModel();
             if ($folder->Create($user->UserID,null,$user->Username,"ME"))
