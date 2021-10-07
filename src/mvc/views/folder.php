@@ -17,10 +17,11 @@
 <body class="d-flex flex-column h-100">
     <?php require __VIEW__ . "/.parts/page/header.php"; ?>
 
-    <main class="container my-3">
+    <main class="container my-5">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center"> <?php echo $folder->Name; ?></h1>
+                <h1 class="text-center mb-3"><i class="bi bi-<?php echo $folder->ParentID === null ? "house-door-fill" : "archive-fill" ?>"></i></h1>
+                <h1 class="text-center mb-3"> <?php echo $folder->Name; ?></h1>
 
                 <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
                     <nav aria-label="breadcrumb">
@@ -54,10 +55,11 @@
                                     <td><?php echo $f->CreateDate ?></td>
                                     <td>
                                         <a type="button" class="btn btn-sm" href="/folder/<?php echo $f->Token ?>"><i class="bi bi-search"></i></a>
-                                        <button type="button" class="btn btn-sm"><i class="bi bi-share"></i></button>
-                                        <button type="button" class="btn btn-sm"><i class="bi bi-type"></i></button>
-                                        <button type="button" class="btn btn-sm"><i class="bi bi-arrows-move"></i></button>
-                                        <a type="button" class="btn btn-sm" href="/folder/delete/<?php echo $f->FolderID ?>"><i class="bi bi-trash"></i></a>
+                                        <?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $folder->UserID) : ?>
+                                            <button type="button" class="btn btn-sm"><i class="bi bi-share"></i></button>
+                                            <button type="button" class="btn btn-sm"><i class="bi bi-type"></i></button>
+                                            <a type="button" class="btn btn-sm" href="/folder/delete/<?php echo $f->FolderID ?>"><i class="bi bi-trash"></i></a>
+                                        <?php endif ?>
                                     </td>
                                 </tr>
                             <?php endif ?>
