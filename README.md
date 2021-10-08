@@ -11,6 +11,10 @@ A simple PHP-based file cloud storage
 
 * [XAMPP](https://www.apachefriends.org/es/index.html) - Apache web server
 
+## Update 🆕
+
+Read [update.md](./documents/update.md) to update to v1.1
+
 ## Authors ✒️
 
 * **Renzo Diaz** - [RenzoDD2001](https://github.com/RenzoDD2001)
