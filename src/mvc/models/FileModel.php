@@ -163,6 +163,29 @@ class FileModel extends DataBase
 		}
 	}
 
+	public function ReadIdentity($Identity)
+	{
+		try {
+			$query = $this->db->prepare("CALL Files_Read_Identity(:Identity)");
+			$query->bindParam(":Identity", $Identity, PDO::PARAM_STR);
+
+			if (!$query->execute())
+				return null;
+
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+			if (sizeof($result) == 0)
+				return null;
+
+			$obj = new FileModel();
+			$obj->FillData($obj, $result[0]);
+
+			return $obj;
+		} catch (Exception $e) {
+			return null;
+		}
+	}
+
 	public function ModifyFolder($FileID, $ParentID)
 	{
 		try {
