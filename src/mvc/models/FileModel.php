@@ -17,6 +17,7 @@ class FileModel extends DataBase
 	public $Name;
 	public $Size;
 	public $Token;
+	public $Identity;
 	public $UploadDate;
 	public $Visibility;
 
@@ -39,6 +40,9 @@ class FileModel extends DataBase
 
 		if (isset($origen['Token']))
 			$destino->Token = $origen['Token'];
+
+		if (isset($origen['Identity']))
+			$destino->Identity = $origen['Identity'];
 
 		if (isset($origen['UploadDate']))
 			$destino->UploadDate = $origen['UploadDate'];
