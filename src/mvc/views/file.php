@@ -60,6 +60,10 @@
 							<th scope="row">Upload Time: </th>
 							<td><?php echo $file->UploadDate; ?></td>
 						</tr>
+						<tr>
+							<th scope="row">Link: </th>
+							<td><button onclick="navigator.clipboard.writeText('<?php echo "http:\/\/" . $_SERVER["SERVER_NAME"] . "/" . $file->Identity ?>')" type="button" class="btn btn-sm"><i class="bi bi-link-45deg"></i></button> <a href="http://<?php echo $_SERVER["SERVER_NAME"] . "/" . $file->Identity ?>"><?php echo $_SERVER["SERVER_NAME"] . "/" . $file->Identity ?></a></td>
+						</tr>
 						<?php if (isset($_SESSION["UserID"]) && $_SESSION["UserID"] === $file->UserID) : ?>
 							<tr>
 								<th scope="row">Visibility: </th>

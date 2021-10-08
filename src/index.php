@@ -110,12 +110,16 @@ else if (str_starts_with(__ROUTE__, "/signup") === true)
         return;
     }
 }
-else
+else if (__ROUTE__ === "/")
 {
     header("Location: /login");
     return;
 }
+else
+{
+    $files = new FileController();
+    $files->ShowFileIdentity();
+    return;
+}
 
-header("Location: /login");
-return;
 ?>

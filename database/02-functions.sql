@@ -30,3 +30,22 @@ BEGIN
 	RETURN CONVERT_TZ(NOW(), 'SYSTEM', '-05:00');
 END //
 
+DROP FUNCTION IF EXISTS RandStr //
+CREATE FUNCTION RandStr(SIZE INTEGER)
+RETURNS TEXT
+BEGIN
+	DECLARE chars TEXT;
+	DECLARE charLen INTEGER;
+	DECLARE randomPassword TEXT;
+
+	SET chars = 'ABCDEFGHIJKMNOPQRTUVWXYZabcdefghijkmnopqrtuvwxyz0123456789';
+	SET charLen = CHAR_LENGTH(chars);
+	SET randomPassword = '';
+
+	WHILE CHAR_LENGTH(randomPassword) < SIZE
+	DO
+		SET randomPassword = CONCAT(randomPassword, SUBSTRING(chars,CEILING(RAND() * charLen),1));
+	END WHILE;
+
+	RETURN randomPassword;
+END //
