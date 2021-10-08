@@ -17,6 +17,7 @@ class FileModel extends DataBase
 	public $Name;
 	public $Size;
 	public $Token;
+	public $Identity;
 	public $UploadDate;
 	public $Visibility;
 
@@ -39,6 +40,9 @@ class FileModel extends DataBase
 
 		if (isset($origen['Token']))
 			$destino->Token = $origen['Token'];
+
+		if (isset($origen['Identity']))
+			$destino->Identity = $origen['Identity'];
 
 		if (isset($origen['UploadDate']))
 			$destino->UploadDate = $origen['UploadDate'];
@@ -145,6 +149,29 @@ class FileModel extends DataBase
 		try {
 			$query = $this->db->prepare("CALL Files_Read_Token(:Token)");
 			$query->bindParam(":Token", $Token, PDO::PARAM_STR);
+
+			if (!$query->execute())
+				return null;
+
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+			if (sizeof($result) == 0)
+				return null;
+
+			$obj = new FileModel();
+			$obj->FillData($obj, $result[0]);
+
+			return $obj;
+		} catch (Exception $e) {
+			return null;
+		}
+	}
+
+	public function ReadIdentity($Identity)
+	{
+		try {
+			$query = $this->db->prepare("CALL Files_Read_Identity(:Identity)");
+			$query->bindParam(":Identity", $Identity, PDO::PARAM_STR);
 
 			if (!$query->execute())
 				return null;

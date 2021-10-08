@@ -16,6 +16,7 @@ CREATE TABLE Files (
 	Name        TEXT        NOT NULL,
 	Size		INTEGER		NOT NULL,
 	Token       VARCHAR(64) NOT NULL    UNIQUE,
+	Identity	VARCHAR(10) NOT NULL    UNIQUE,
 	UploadDate  DATETIME    NOT NULL,
 	Visibility  TEXT        NOT NULL, -- ALL, ME
 	
@@ -29,8 +30,10 @@ CREATE PROCEDURE Files_Create (IN UserID INTEGER, IN FolderID INTEGER, IN Name T
 BEGIN
     SET @token = Nonce();
     SET @upload_date = LocalDateTime();
-	INSERT INTO Files (UserID, FolderID, Name, Size, Token, UploadDate, Visibility)
-	VALUES 	(UserID, FolderID, Name, Size, @token, @upload_date, Visibility);
+    SET @indentity = RandStr(10);
+
+	INSERT INTO Files (UserID, FolderID, Name, Size, Token, Identity, UploadDate, Visibility)
+	VALUES 	(UserID, FolderID, Name, Size, @token, @indentity, @upload_date, Visibility);
 
 	SELECT 	F.*
 	FROM 	Files AS F
@@ -38,6 +41,7 @@ BEGIN
 	        AND F.FolderID = FolderID
 			AND F.Name = Name
 			AND F.Token = @token
+			AND F.Identity = @indentity
 			AND F.UploadDate = @upload_date
 			AND F.Visibility = Visibility;
 END //
@@ -72,6 +76,14 @@ BEGIN
 	SELECT 	F.*
 	FROM 	Files AS F
 	WHERE 	F.Token = Token;
+END //
+
+DROP PROCEDURE IF EXISTS Files_Read_Identity //
+CREATE PROCEDURE Files_Read_Identity ( IN Identity TEXT )
+BEGIN
+	SELECT 	F.*
+	FROM 	Files AS F
+	WHERE 	F.Identity = Identity;
 END //
 
 DROP PROCEDURE IF EXISTS Files_Modify_Folder //

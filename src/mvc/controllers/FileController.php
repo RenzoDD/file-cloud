@@ -41,6 +41,36 @@ class FileController
         require __VIEW__ . "/deny-file.php";
         return;
     }
+    public function ShowFileIdentity()
+    {
+        $arg = explode("/", __ROUTE__);
+        
+        $file = new FileModel();
+        $file = $file->ReadIdentity($arg[1]);
+
+        if ($file !== null)
+        {
+            if ($file->Visibility === "ALL" || (isset($_SESSION["UserID"]) && $file->UserID == $_SESSION["UserID"]))
+            {
+                $_SESSION["FileID"] = $file->FileID;
+
+                $folder = new FolderModel();
+                $folder = $folder->ReadFolderID($file->FolderID);
+                
+                $childs = $folder->ReadChilds($folder->FolderID);
+                $ancestors = $folder->ReadAncestors($folder->FolderID);
+                
+                $user = new UserModel();
+                $user = $user->ReadUserID($file->UserID);
+                
+                require __VIEW__ . "/file.php";
+                return;
+            }
+        }
+        
+        require __VIEW__ . "/deny-file.php";
+        return;
+    }
     public function DownloadFile()
     {
         $arg = explode("/", __ROUTE__);
